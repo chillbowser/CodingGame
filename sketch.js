@@ -3,14 +3,6 @@ let box;
 let floor;
 let A1
 
-function preload(){
-	floor = new Group()
-	floor.collider  = 's'
-	floor.w = 50
-	floor.h = 50
-	floor.tile = '='
-}
-
 function setup() {
 	new Canvas(1920,1080, 'fullscreen');
     world.gravity.y = 10
