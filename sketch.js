@@ -9,16 +9,6 @@ function preload(){
 	floor.w = 50
 	floor.h = 50
 	floor.tile = '='
-	a1 = new Tiles{[
-		'                                        ',
-		'                                        ',
-		'                                        ',
-		'                                        ',
-		'                                        ',
-		'                                        ',
-		'                                        ',
-		'                                        ',
-	]}
 }
 
 function setup() {
