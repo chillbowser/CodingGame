@@ -172,6 +172,7 @@ function draw() {
 		floor.h/2,
 		50,50
 )
+mapCurrent.layer = 0
 		}
 	}
 }
