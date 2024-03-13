@@ -2,7 +2,8 @@ let player1,player2;
 let box;
 let floor;
 let nxt = false
-let A1;
+let a = [];
+let i = 0
 
 function preload(){
 	floor = new Group()
@@ -27,7 +28,7 @@ function preload(){
 	door.tile = 'd'
 	door.color = 'pink'
 
-	a1 = new Tiles ([
+	a =[[
 		'=============================================',
 		'=                                           =',
 		'=                                           =',
@@ -37,7 +38,7 @@ function preload(){
 		'=                                           =',
 		'=                                           =',
 		'=                                           =',
-		'=                                           =',
+		'=======                                     =',
 		'=                                           =',
 		'=                                           =',
 		'=                                           =',
@@ -49,9 +50,37 @@ function preload(){
 		'=                                           =',
 		'=                                          d=',
 		'=                        p                 d=',
-		'=============================================',
-	],floor.w/2,floor.h/2,50,50
+		'=============================================',],
+	  [	'=============================================',
+	    '=                                           =',
+	    '=                                           =',
+	    '=                                           =',
+	    '=                                           =',
+		'=                                           =',
+		'=                                           =',
+		'=                                           =',
+		'=                                           =',
+		'=======                                     =',
+		'=                                          d=',
+		'=                                          d=',
+		'=                                   =========',
+		'=                                           =',
+		'=                                           =',
+		'=                                           =',
+		'=                                           =',
+		'=                                           =',
+		'=                                           =',
+		'=                                           =',
+		'=      p                                    =',
+		'=============================================',]
+
+]
+	mapCurrent = new Tiles(a[i],
+		floor.w/2,
+		floor.h/2,
+		50,50
 )
+
 
 }
 function setup() {
@@ -59,14 +88,14 @@ function setup() {
     world.gravity.y = 10
 
 	//Players
-	player1 = new Sprite(canvas.w/2,canvas.h/2,80,80,'d');
+	player1 = new Sprite(150,390,80,80,'d');
     player1.color = 'blue'
-	player1.friction = 2
+	player1.friction = 7
 	player1.rotationLock = true
 
-	player2 = new Sprite(canvas.w/2 + 100,canvas.h/2,80,80,'d');
+	player2 = new Sprite(250,390,80,80,'d');
     player2.color = 'purple'
-	player2.friction = 2
+	player2.friction = 7
 	player2.rotationLock = true
 
 	//Box
@@ -78,32 +107,46 @@ function setup() {
 
 function draw() {
 	background(100);
+	if(player1.x>960&&player1.x<1290){
 	camera.x = player1.x 
+} else if(player1.x<960){
+	camera.x = 960
+} else if(player1.x>1290){
+	camera.x = 1290
+}
 
 	//controls
 
 	if(kb.pressing('a')){
-		player1.vel.x = -10
+		player1.vel.x = -6
 	}
 
 	if(kb.presses('w') && player1.colliding(floor)){
 		player1.vel.y = -10
 	}
 
+	if(kb.presses('w') && player1.colliding(player2)){
+		player1.vel.y = -10
+	}
+
 	if(kb.pressing('d')){
-		player1.vel.x = 10
+		player1.vel.x = 6
 	}
 
 	if(kb.pressing(LEFT_ARROW)){
-		player2.vel.x = -10
+		player2.vel.x = -6
 	}
 
 	if(kb.presses(UP_ARROW) && player2.colliding(floor)){
 		player2.vel.y = -10
 	}
 
+	if(kb.presses(UP_ARROW) && player2.colliding(player1)){
+		player2.vel.y = -10
+	}
+
 	if(kb.pressing(RIGHT_ARROW)){
-		player2.vel.x = 10
+		player2.vel.x = 6
 	}
 
 	//pressure plate
@@ -115,7 +158,20 @@ function draw() {
 
 	//door
 
-	if(player1.overlapping(door) || player2.overlapping(door) && nxt == true){
-		console.log('level up')
+	if(player1.overlapping(door) || player2.overlapping(door)){
+		if(nxt == true){
+			i++
+	mapCurrent.removeAll()
+	player1.x = 150
+	player1.y = 390
+	player2.x = 250
+	player2.y = 390
+	box.x = canvas.w/2
+	mapCurrent = new Tiles(a[i],
+		floor.w/2,
+		floor.h/2,
+		50,50
+)
+		}
 	}
 }
